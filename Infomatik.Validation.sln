@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation", "Infomatik.Validation\Infomatik.Validation.csproj", "{35D6045B-B2B6-494C-8F78-6F0D30179FD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.WinForms", "Infomatik.Validation.WinForms\Infomatik.Validation.WinForms.csproj", "{445312B5-8588-47C5-AE1B-8F300ACC5D72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E902EA-EC85-4B19-B8D0-56038192FCD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.Tests", "Infomatik.Validation.Tests\Infomatik.Validation.Tests.csproj", "{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D4921733-3E6F-4D41-AF5F-7421059CA6CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.WinForms.Sample", "Infomatik.Validation.WinForms.Sample\Infomatik.Validation.WinForms.Sample.csproj", "{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35D6045B-B2B6-494C-8F78-6F0D30179FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D6045B-B2B6-494C-8F78-6F0D30179FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D6045B-B2B6-494C-8F78-6F0D30179FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D6045B-B2B6-494C-8F78-6F0D30179FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445312B5-8588-47C5-AE1B-8F300ACC5D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445312B5-8588-47C5-AE1B-8F300ACC5D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445312B5-8588-47C5-AE1B-8F300ACC5D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445312B5-8588-47C5-AE1B-8F300ACC5D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C8A60875-D9E8-4CA3-ADE3-C2ABD1DD7DB8} = {43E902EA-EC85-4B19-B8D0-56038192FCD5}
+		{9665E1CC-0AC9-4ECA-85DE-98FCE2F3D8E8} = {D4921733-3E6F-4D41-AF5F-7421059CA6CE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FF206E2-7DED-4B41-A70B-8B8DC07E57AF}
+	EndGlobalSection
+EndGlobal
