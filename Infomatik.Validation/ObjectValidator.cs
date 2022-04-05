@@ -8,8 +8,11 @@ namespace Infomatik.Validation;
 public class ObjectValidator : IObjectValidator
 {
 
-  #region fields
+  #region properties
 
+  /// <summary>
+  /// Service Provider used to create ValidationContext
+  /// </summary>
   public IServiceProvider? ServiceProvider { get; set; }
 
   #endregion
