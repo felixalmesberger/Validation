@@ -8,6 +8,7 @@ namespace Infomatik.Validation.WinForms;
 /// IValidatableObject interface. Errors will be visualized using
 /// an error provider
 /// </summary>
+[ToolboxBitmap(typeof(ErrorProvider))]
 public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
 {
   #region events

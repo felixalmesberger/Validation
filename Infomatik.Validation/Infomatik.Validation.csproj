@@ -5,6 +5,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Infomatik</Authors>
+    <Description>Extendend Validation for Objects</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/felixalmesberger/Validation</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/felixalmesberger/Validation</PackageProjectUrl>
+    <Copyright>Infomatik 2022</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>

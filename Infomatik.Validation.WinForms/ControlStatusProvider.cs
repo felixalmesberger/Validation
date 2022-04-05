@@ -8,6 +8,7 @@ namespace Infomatik.Validation.WinForms;
 /// Capable of showing an error / warn icon or setting
 /// the cue banner for required errors
 /// </summary>
+[ToolboxBitmap(typeof(ErrorProvider))]
 [ProvideProperty("IconPadding", typeof(Control))]
 [ProvideProperty("IconAlignment", typeof(Control))]
 [ProvideProperty("RequiredError", typeof(Control))]

@@ -9,11 +9,19 @@ namespace Infomatik.Validation.Tests
     private readonly ObjectValidator validator = new();
 
     [Fact]
+    public void Validate_ObjectWithValidationAttributeAndImplementingIValidatableObject_FullyValidated()
+    {
+      var instance = new ObjectWithValidationAttributeAndImplementingIValidatableObject();
+      var result = validator.Validate(instance, false);
+      Assert.Equal(2, result.Errors.Count);
+    }
+
+    [Fact]
     public void Validate_PropertyAnnotatedWithErrorAttribute_ReturnsErrorResult()
     {
       var instance = new PropertyAnnotatedWithErrorAttribute_TestClass();
 
-      var result = validator.Validate(instance, false);
+      var result = this.validator.Validate(instance, false);
 
       Assert.Equal(1, result.Errors.Count);
       var memberName = result.Errors[0].MemberNames.ToList()[0];
@@ -25,7 +33,7 @@ namespace Infomatik.Validation.Tests
     {
       var instance = new PropertyAnnotatedWithWarningAttribute_TestClass();
 
-      var result = validator.Validate(instance, false);
+      var result = this.validator.Validate(instance, false);
 
       Assert.Equal(1, result.Warnings.Count);
       var memberName = result.Warnings[0].MemberNames.ToList()[0];
@@ -37,7 +45,7 @@ namespace Infomatik.Validation.Tests
     {
       var instance = new PropertyAnnotatedWithRequiredAttribute_TestClass();
 
-      var result = validator.Validate(instance, false);
+      var result = this.validator.Validate(instance, false);
 
       Assert.Equal(1, result.Required.Count);
 
@@ -49,7 +57,7 @@ namespace Infomatik.Validation.Tests
     public void Validate_CancelOnFirstErrorOnlyAttributes_CancelsOnFirstError()
     {
       var instance = new CancelOnFirstErrorOnlyAttributes_TestClass();
-      var result = validator.Validate(instance, true);
+      var result = this.validator.Validate(instance, true);
 
       Assert.Equal(1, result.Required.Count);
       var memberName = result.Required[0].MemberNames.ToList()[0];
@@ -60,7 +68,7 @@ namespace Infomatik.Validation.Tests
     public void Validate_CancelOnFirstErrorOnlyIValidatable_CancelOnFirstError()
     {
       var instance = new CancelOnFirstErrorOnlyIValidatable_TestClass();
-      var result = validator.Validate(instance, true);
+      var result = this.validator.Validate(instance, true);
 
       Assert.Equal(1, result.Errors.Count);
     }
@@ -70,7 +78,7 @@ namespace Infomatik.Validation.Tests
     {
       var instance = new CancelOnFirstErrorAttributeAndIValidatable_TestClass();
 
-      var result = validator.Validate(instance, true);
+      var result = this.validator.Validate(instance, true);
 
       Assert.Equal(1, result.Errors.Count);
     }
@@ -79,7 +87,7 @@ namespace Infomatik.Validation.Tests
     public void Validate_ExceptionInValidationAttribute_WrappedInValidationResult()
     {
       var instance = new ExceptionInValidationAttributeWrappedInValidationResult_TestClass();
-      var result = validator.Validate(instance, false);
+      var result = this.validator.Validate(instance, false);
       Assert.Equal(1, result.Errors.Count);
     }
   }
@@ -97,7 +105,7 @@ namespace Infomatik.Validation.Tests
     public string Property { get; set; }
   }
 
-  public class PropertyAnnotatedWithErrorAttributeAndIValidatable_TestClass : IValidatableObject
+  public class ObjectWithValidationAttributeAndImplementingIValidatableObject : IValidatableObject
   {
     [Error("Property")]
     public string Property1 { get; set; }
@@ -190,5 +198,4 @@ namespace Infomatik.Validation.Tests
       throw new Exception("Faulty");
     }
   }
-
 }

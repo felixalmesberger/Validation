@@ -201,7 +201,7 @@
       this.controlStatusProvider.SetErrorMessage(this, "");
       this.Name = "Form1";
       this.controlStatusProvider.SetRequiredError(this, false);
-      this.Text = "Form1";
+      this.Text = "Sample";
       this.controlStatusProvider.SetWarnMessage(this, "");
       ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceValidator)).EndInit();
