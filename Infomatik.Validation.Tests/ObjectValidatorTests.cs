@@ -74,6 +74,14 @@ namespace Infomatik.Validation.Tests
 
       Assert.Equal(1, result.Errors.Count);
     }
+
+    [Fact]
+    public void Validate_ExceptionInValidationAttribute_WrappedInValidationResult()
+    {
+      var instance = new ExceptionInValidationAttributeWrappedInValidationResult_TestClass();
+      var result = validator.Validate(instance, false);
+      Assert.Equal(1, result.Errors.Count);
+    }
   }
 
   public class PropertyAnnotatedWithWarningAttribute_TestClass
@@ -167,4 +175,20 @@ namespace Infomatik.Validation.Tests
       return new WarningValidationResult(base.IsValid(value, validationContext));
     }
   }
+
+
+  public class ExceptionInValidationAttributeWrappedInValidationResult_TestClass
+  {
+    [FaultyValidation]
+    public string Property { get; set; }
+  }
+
+  public class FaultyValidationAttribute : ValidationAttribute
+  {
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+      throw new Exception("Faulty");
+    }
+  }
+
 }
