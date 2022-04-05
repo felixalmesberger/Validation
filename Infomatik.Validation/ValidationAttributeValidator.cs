@@ -13,6 +13,14 @@ internal static class ValidationAttributeValidator
 {
   private static readonly Dictionary<Type, TypeAttributeValidation> cache = new();
 
+  /// <summary>
+  /// Validate an object using ValidationAttributes,
+  /// exceptions in validation attribute will be wrapped in a ValidationResult
+  /// </summary>
+  /// <param name="instance">Validated object</param>
+  /// <param name="context">Validation Context</param>
+  /// <param name="cancelOnFirstError">Cancel after first error</param>
+  /// <returns></returns>
   public static IEnumerable<ValidationResult> Validate(object instance, ValidationContext context, bool cancelOnFirstError)
   {
     var typeAttributeValidation = GetTypeAttributeValidation(instance);
@@ -110,7 +118,7 @@ internal static class ValidationAttributeValidator
       {
         var result = this.SafeValidateAttribute(value, attribute, context);
 
-        if (result == ValidationResult.Success) 
+        if (result is null)
           continue;
 
         if (attribute is RequiredAttribute)
@@ -136,7 +144,7 @@ internal static class ValidationAttributeValidator
       }
       catch (Exception ex)
       {
-        return new ValidationResult(SR.ExceptionInValidation(attribute, this.propertyInfo, this.objectType, ex));
+        return new ValidationResult(SR.ExceptionInValidation(attribute, this.propertyInfo, this.objectType, ex), new[] { this.propertyInfo.Name });
       }
     }
 
