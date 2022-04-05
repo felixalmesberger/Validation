@@ -53,24 +53,24 @@ public class ControlStatusProvider : Component, IExtenderProvider
 
   #endregion
 
-  public void SetErrorIconPadding(Control control, int padding)
+  public void SetIconPadding(Control control, int padding)
   {
     this.errorProvider.SetIconPadding(control, padding);
     this.warnProvider.SetIconPadding(control, padding);
   }
 
-  public int GetErrorIconPadding(Control control)
+  public int GetIconPadding(Control control)
   {
     return this.errorProvider.GetIconPadding(control);
   }
 
-  public void SetErrorIconAlignment(Control control, ErrorIconAlignment alignment)
+  public void SetIconAlignment(Control control, ErrorIconAlignment alignment)
   {
     this.errorProvider.SetIconAlignment(control, alignment);
     this.warnProvider.SetIconAlignment(control, alignment);
   }
 
-  public ErrorIconAlignment GetErrorIconAlignment(Control control)
+  public ErrorIconAlignment GetIconAlignment(Control control)
   {
     return this.errorProvider.GetIconAlignment(control);
   }
@@ -85,6 +85,13 @@ public class ControlStatusProvider : Component, IExtenderProvider
 
   public void SetRequiredError(Control control, bool showRequired)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+    {
+      visualizer.SetRequiredError(showRequired);
+      return;
+    }
+
     this.InitializeControlIconAlignment(control);
 
     var canUseRequiredProvider = this.requiredProvider.CanExtend(control);
@@ -102,6 +109,13 @@ public class ControlStatusProvider : Component, IExtenderProvider
 
   public void SetErrorMessage(Control control, string? message)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+    {
+      visualizer.SetErrorMessage(message);
+      return;
+    }
+
     this.InitializeControlIconAlignment(control);
 
     if (message is not null)
@@ -112,6 +126,13 @@ public class ControlStatusProvider : Component, IExtenderProvider
 
   public void SetWarnMessage(Control control, string? message)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+    {
+      visualizer.SetWarnMessage(message);
+      return;
+    }
+
     this.InitializeControlIconAlignment(control);
 
     if (message is not null)
@@ -119,18 +140,30 @@ public class ControlStatusProvider : Component, IExtenderProvider
     this.warnProvider.SetError(control, message);
   }
 
-  public string GetWarnMessage(Control control)
+  public string? GetWarnMessage(Control control)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+      return visualizer.GetWarnMessage();
+
     return this.warnProvider.GetError(control);
   }
 
   public bool GetRequiredError(Control control)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+      return visualizer.GetRequiredError();
+
     return this.requiredProvider.GetShowRequiredMessage(control);
   }
 
-  public string GetErrorMessage(Control control)
+  public string? GetErrorMessage(Control control)
   {
+    // ReSharper disable once SuspiciousTypeConversion.Global
+    if (control is IVisualizeStatus visualizer)
+      return visualizer.GetErrorMessage();
+
     return this.errorProvider.GetError(control);
   }
 
