@@ -2,9 +2,8 @@
 
 namespace Infomatik.Validation.WinForms;
 
-public static class DefaultIcons
+internal static class DefaultIcons
 {
-  
   // create a control to get access to DeviceDpi
   private static readonly Control control = new();
 
@@ -12,7 +11,7 @@ public static class DefaultIcons
   {
     get
     {
-      if(!control.IsHandleCreated)
+      if (!control.IsHandleCreated)
         control.CreateControl();
 
       return control.DeviceDpi;
@@ -30,7 +29,7 @@ public static class DefaultIcons
 
     using var iconBitmap = Bitmap.FromHicon(icon32.Handle);
 
-    var newSize = new Size((int) (iconBitmap.Width * scaling), (int) (iconBitmap.Height * scaling));
+    var newSize = new Size((int)(iconBitmap.Width * scaling), (int)(iconBitmap.Height * scaling));
     var resizedIconBitmap = new Bitmap(iconBitmap, newSize);
     return Icon.FromHandle(resizedIconBitmap.GetHicon());
   }

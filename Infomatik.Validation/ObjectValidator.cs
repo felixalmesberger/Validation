@@ -29,13 +29,13 @@ public class ObjectValidator : IObjectValidator
   /// Validates an object
   /// </summary>
   /// <param name="instance">The object instance to test</param>
-  /// <param name="cancelOnFirstError">Cancel validation after first error</param>
+  /// <param name="breakOnFirstError">Cancel validation after first error</param>
   /// <returns>Result of the validation</returns>
-  public ObjectValidationResult Validate(object instance, bool cancelOnFirstError)
+  public ObjectValidationResult Validate(object instance, bool breakOnFirstError = false)
   {
     var validationContext = new ValidationContext(instance, this.ServiceProvider, null);
 
-    var results = this.EnumerateValidationResults(instance, validationContext, cancelOnFirstError).ToList();
+    var results = this.EnumerateValidationResults(instance, validationContext, breakOnFirstError).ToList();
 
     var warnings = results.OfType<WarningValidationResult>()
                                               .Cast<ValidationResult>()
@@ -56,12 +56,12 @@ public class ObjectValidator : IObjectValidator
   /// Evaluates all ValidationAttributes and the IValidatableObject.Validate method
   /// </summary>
   private IEnumerable<ValidationResult> EnumerateValidationResults(object instance, ValidationContext context,
-    bool cancelOnFirstError)
+    bool breakOnFirstError)
   {
-    foreach (var validationResult in ValidationAttributeValidator.Validate(instance, context, cancelOnFirstError))
+    foreach (var validationResult in ValidationAttributeValidator.Validate(instance, context, breakOnFirstError))
     {
       yield return validationResult;
-      if (cancelOnFirstError)
+      if (breakOnFirstError)
         yield break;
     }
 
@@ -71,7 +71,7 @@ public class ObjectValidator : IObjectValidator
     foreach (var validationResult in validatable.Validate(context))
     {
       yield return validationResult;
-      if (cancelOnFirstError)
+      if (breakOnFirstError)
         yield break;
     }
   }

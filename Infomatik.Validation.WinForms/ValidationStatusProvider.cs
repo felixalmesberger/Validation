@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Infomatik.Validation.WinForms.i18n;
-using Infomatik.Validation.WinForms.Properties;
 
 namespace Infomatik.Validation.WinForms;
 

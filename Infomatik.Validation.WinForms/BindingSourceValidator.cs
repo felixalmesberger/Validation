@@ -173,7 +173,7 @@ public class BindingSourceValidator : Component, ISupportInitialize
     if (this.ValidationStatusProvider is null)
       return;
 
-    var validationResult = this.Validator.Validate(this.BindingSource.DataSource, cancelOnFirstError: false);
+    var validationResult = this.Validator.Validate(this.BindingSource.DataSource, breakOnFirstError: false);
 
     foreach (var binding in this.Bindings)
     {

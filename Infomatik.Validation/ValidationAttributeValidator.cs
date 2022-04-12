@@ -19,12 +19,12 @@ internal static class ValidationAttributeValidator
   /// </summary>
   /// <param name="instance">Validated object</param>
   /// <param name="context">Validation Context</param>
-  /// <param name="cancelOnFirstError">Cancel after first error</param>
+  /// <param name="breakOnFirstError">Cancel after first error</param>
   /// <returns></returns>
-  public static IEnumerable<ValidationResult> Validate(object instance, ValidationContext context, bool cancelOnFirstError)
+  public static IEnumerable<ValidationResult> Validate(object instance, ValidationContext context, bool breakOnFirstError)
   {
     var typeAttributeValidation = GetTypeAttributeValidation(instance);
-    return typeAttributeValidation.EnumerateValidationAttributes(instance, context, cancelOnFirstError);
+    return typeAttributeValidation.EnumerateValidationAttributes(instance, context, breakOnFirstError);
   }
 
   [MethodImpl(MethodImplOptions.Synchronized)]
@@ -59,17 +59,17 @@ internal static class ValidationAttributeValidator
     }
 
     public IEnumerable<ValidationResult> EnumerateValidationAttributes(object instance, ValidationContext context,
-      bool cancelOnFirstError)
+      bool breakOnFirstError)
     {
       foreach (var propertyValidation in this.propertyValidations)
       {
-        var results = propertyValidation.EnumerateValidationResults(instance, context, cancelOnFirstError);
+        var results = propertyValidation.EnumerateValidationResults(instance, context, breakOnFirstError);
 
         foreach (var result in results)
         {
           yield return result;
 
-          if (cancelOnFirstError)
+          if (breakOnFirstError)
             yield break;
         }
       }
@@ -109,7 +109,7 @@ internal static class ValidationAttributeValidator
     #endregion
     public bool HasValidationAttributes => this.validationAttributes.Any();
 
-    public IEnumerable<ValidationResult> EnumerateValidationResults(object instance, ValidationContext context, bool cancelOnFirstError)
+    public IEnumerable<ValidationResult> EnumerateValidationResults(object instance, ValidationContext context, bool breakOnFirstError)
     {
       if (!this.TryGetPropertyValue(instance, out var value))
         yield break;
@@ -126,7 +126,7 @@ internal static class ValidationAttributeValidator
         else
           yield return result;
 
-        if (cancelOnFirstError)
+        if (breakOnFirstError)
           yield break;
       }
     }

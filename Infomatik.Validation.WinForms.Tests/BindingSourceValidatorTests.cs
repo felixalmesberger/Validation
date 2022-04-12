@@ -36,10 +36,10 @@ public class ObservableValidator : IObjectValidator
 
   public int NumberOfValidationInvocations { get; private set; }= 0;
 
-  public ObjectValidationResult Validate(object instance, bool cancelOnFirstError)
+  public ObjectValidationResult Validate(object instance, bool breakOnFirstError)
   {
     this.NumberOfValidationInvocations++;
-    return ObjectValidator.Default.Validate(instance, cancelOnFirstError);
+    return ObjectValidator.Default.Validate(instance, breakOnFirstError);
   }
 }
 
