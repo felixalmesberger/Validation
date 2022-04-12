@@ -15,6 +15,6 @@ Errors and warnings are visualized as known by the ErrorProvider property. Missi
 
 ## Getting Started
 
-![getting-started](getting-started.png)
+![getting-started](getting-started-designer.png)
 
 On a user control, that already contains a BindingSource and add the **ValidationStatusProvider** and the **BindingSourceValidator** components. In the properties for the validator link it to the ValidationStatusProvider and the BindingSource and you are good to go.
