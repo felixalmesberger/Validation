@@ -7,7 +7,7 @@ This library aims to replace the static [Validator](https://docs.microsoft.com/e
 3. Not static: The validator implements an interface, that can be exchanged in tests. 
 4. Easy usage: No creating and passing of ValidationContexts etc. One call thats all.
 
-[more info](docs/validator)
+[more info](docs/validator.d)
 
 ## UI Visualization
 
@@ -15,4 +15,4 @@ If you want to visualize the validation results on a Windows Forms user control 
 
 ![sample](docs/sample.png)
 
-[more info](docs/bindingsourcevalidator)
+[more info](docs/bindingsourcevalidato.mdr)
