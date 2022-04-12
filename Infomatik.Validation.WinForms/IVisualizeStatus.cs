@@ -7,7 +7,7 @@ public interface IVisualizeStatus
 {
   void SetErrorMessage(string? error);
   void SetWarnMessage(string? warning);
-  void SetRequiredError(bool showRequired);
+  void SetIsMissingValue(bool showRequired);
 
   string? GetErrorMessage();
   string? GetWarnMessage();

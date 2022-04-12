@@ -41,15 +41,15 @@ public class ObjectValidator : IObjectValidator
                                               .Cast<ValidationResult>()
                                               .ToList();
 
-    var required = results.OfType<RequiredValidationResult>()
+    var missing = results.OfType<RequiredValidationResult>()
                                               .Cast<ValidationResult>()
                                               .ToList();
 
     var errors = results.Except(warnings)
-                                            .Except(required)
+                                            .Except(missing)
                                             .ToList();
 
-    return new ObjectValidationResult(errors, warnings, required);
+    return new ObjectValidationResult(errors, warnings, missing);
   }
 
   /// <summary>

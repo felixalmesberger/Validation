@@ -23,6 +23,6 @@ public static class ValidatableObjectExtensions
   /// <summary>
   /// Creates a required <see cref="ValidationResult"/>
   /// </summary>
-  public static ValidationResult CreateRequired(this IValidatableObject _, string memberName)
+  public static ValidationResult CreateMissing(this IValidatableObject _, string memberName)
     => new RequiredValidationResult($"Required field '{memberName}'", new[] { memberName });
 }

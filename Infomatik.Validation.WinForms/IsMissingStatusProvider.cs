@@ -9,15 +9,15 @@ namespace Infomatik.Validation.WinForms;
 /// TextBox and ComboBox instead if showing an error icon
 /// </summary>
 [ProvideProperty("ShowRequiredMessage", typeof(Control))]
-public class RequiredErrorProvider : Component, IExtenderProvider
+public class IsMissingStatusProvider : Component, IExtenderProvider
 {
   private readonly IDictionary<Control, bool> controlShowRequiredMessageMap = new Dictionary<Control, bool>();
 
-  public RequiredErrorProvider()
+  public IsMissingStatusProvider()
   {
   }
 
-  public RequiredErrorProvider(IContainer? container)
+  public IsMissingStatusProvider(IContainer? container)
   {
     container?.Add(this);
   }

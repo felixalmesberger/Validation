@@ -47,9 +47,9 @@ namespace Infomatik.Validation.Tests
 
       var result = this.validator.Validate(instance, false);
 
-      Assert.Equal(1, result.Required.Count);
+      Assert.Equal(1, result.Missing.Count);
 
-      var memberName = result.Required[0].MemberNames.ToList()[0];
+      var memberName = result.Missing[0].MemberNames.ToList()[0];
       Assert.Equal(nameof(PropertyAnnotatedWithRequiredAttribute_TestClass.Property), memberName);
     }
 
@@ -59,8 +59,8 @@ namespace Infomatik.Validation.Tests
       var instance = new CancelOnFirstErrorOnlyAttributes_TestClass();
       var result = this.validator.Validate(instance, true);
 
-      Assert.Equal(1, result.Required.Count);
-      var memberName = result.Required[0].MemberNames.ToList()[0];
+      Assert.Equal(1, result.Missing.Count);
+      var memberName = result.Missing[0].MemberNames.ToList()[0];
       Assert.Equal(nameof(CancelOnFirstErrorOnlyAttributes_TestClass.Property1), memberName);
     }
 

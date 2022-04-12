@@ -35,7 +35,10 @@ public class BindingSourceValidator : Component, ISupportInitialize
 
   public BindingSourceValidator()
   {
-    this.throttledValidation = new(this.ValidateBindings);
+    this.throttledValidation = new(this.ValidateBindings)
+    {
+      ThrottleTimeInMs = 300
+    };
   }
 
   public BindingSourceValidator(IContainer container)
@@ -186,7 +189,7 @@ public class BindingSourceValidator : Component, ISupportInitialize
         this.ValidationStatusProvider.SetErrorMessage(binding.Control, error);
 
       this.ValidationStatusProvider.SetWarnMessage(binding.Control, warning);
-      this.ValidationStatusProvider.SetRequiredError(binding.Control, isRequired);
+      this.ValidationStatusProvider.SetIsMissingValue(binding.Control, isRequired);
     }
 
     this.IsValid = validationResult.IsValid;

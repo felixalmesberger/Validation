@@ -11,7 +11,7 @@ namespace Infomatik.Validation.WinForms;
 [ToolboxBitmap(typeof(ErrorProvider))]
 [ProvideProperty("IconPadding", typeof(Control))]
 [ProvideProperty("IconAlignment", typeof(Control))]
-[ProvideProperty("RequiredError", typeof(Control))]
+[ProvideProperty("IsMissingValue", typeof(Control))]
 [ProvideProperty("ErrorMessage", typeof(Control))]
 [ProvideProperty("WarnMessage", typeof(Control))]
 public class ValidationStatusProvider : Component, IExtenderProvider
@@ -28,7 +28,7 @@ public class ValidationStatusProvider : Component, IExtenderProvider
     BlinkStyle = ErrorBlinkStyle.NeverBlink
   };
 
-  private readonly RequiredErrorProvider requiredProvider = new();
+  private readonly IsMissingStatusProvider isMissingStatusProvider = new();
 
   #endregion
 
@@ -36,7 +36,8 @@ public class ValidationStatusProvider : Component, IExtenderProvider
 
   public ValidationStatusProvider()
   {
-    this.warnProvider.Icon = SystemIcons.Warning;
+    this.warnProvider.Icon = DefaultIcons.Warning;
+    this.errorProvider.Icon = DefaultIcons.Error;
   }
 
   public ValidationStatusProvider(IContainer? container)
@@ -59,7 +60,7 @@ public class ValidationStatusProvider : Component, IExtenderProvider
   /// Gets or sets the Icon that displayed next to a control when a warn has been set for the control.
   /// </summary>
   [Category("ValidationStatusProvider")]
-  [Description(@"Gets or sets the Icon that displayed next to a control when a warn has been set for the control.")]
+  [Description("Gets or sets the Icon that displayed next to a control when a warn has been set for the control.")]
   public Icon? WarnIcon
   {
     get => this.warnProvider.Icon;
@@ -77,7 +78,7 @@ public class ValidationStatusProvider : Component, IExtenderProvider
   /// Gets or sets the Icon that displayed next to a control when an error has been set for the control.
   /// </summary>
   [Category("ValidationStatusProvider")]
-  [Description(@"Gets or sets the Icon that displayed next to a control when an error has been set for the control.")]
+  [Description("Gets or sets the Icon that displayed next to a control when an error has been set for the control.")]
   public Icon? ErrorIcon
   {
     get => this.errorProvider.Icon;
@@ -118,33 +119,33 @@ public class ValidationStatusProvider : Component, IExtenderProvider
 
   public void Clear(Control control)
   {
-    this.SetRequiredError(control, false);
+    this.SetIsMissingValue(control, false);
     this.SetErrorMessage(control, null);
   }
 
   #endregion
 
-  public void SetRequiredError(Control control, bool showRequired)
+  public void SetIsMissingValue(Control control, bool isMissing)
   {
     // ReSharper disable once SuspiciousTypeConversion.Global
     if (control is IVisualizeStatus visualizer)
     {
-      visualizer.SetRequiredError(showRequired);
+      visualizer.SetIsMissingValue(isMissing);
       return;
     }
 
     this.InitializeDefaultControlIconAlignment(control);
 
-    var canUseRequiredProvider = this.requiredProvider.CanExtend(control);
+    var canUseRequiredProvider = this.isMissingStatusProvider.CanExtend(control);
     var errorProviderShowingRequiredMessage = this.errorProvider.GetError(control) == RequiredFallbackErrorMessage;
 
-    if (!showRequired && errorProviderShowingRequiredMessage)
+    if (!isMissing && errorProviderShowingRequiredMessage)
       this.errorProvider.SetError(control, null);
-    else if (!showRequired && canUseRequiredProvider)
-      this.requiredProvider.SetShowRequiredMessage(control, false);
-    else if (showRequired && canUseRequiredProvider)
-      this.requiredProvider.SetShowRequiredMessage(control, true);
-    else if (showRequired && !canUseRequiredProvider)
+    else if (!isMissing && canUseRequiredProvider)
+      this.isMissingStatusProvider.SetShowRequiredMessage(control, false);
+    else if (isMissing && canUseRequiredProvider)
+      this.isMissingStatusProvider.SetShowRequiredMessage(control, true);
+    else if (isMissing && !canUseRequiredProvider)
       this.errorProvider.SetError(control, RequiredFallbackErrorMessage);
   }
 
@@ -201,13 +202,13 @@ public class ValidationStatusProvider : Component, IExtenderProvider
   /// </summary>
   [Category("ValidationStatusProvider")]
   [Description("Visualize that this is a required field")]
-  public bool GetRequiredError(Control control)
+  public bool GetIsMissingValue(Control control)
   {
     // ReSharper disable once SuspiciousTypeConversion.Global
     if (control is IVisualizeStatus visualizer)
       return visualizer.GetRequiredError();
 
-    return this.requiredProvider.GetShowRequiredMessage(control);
+    return this.isMissingStatusProvider.GetShowRequiredMessage(control);
   }
 
   /// <summary>

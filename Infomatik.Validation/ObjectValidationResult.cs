@@ -10,11 +10,11 @@ public class ObjectValidationResult
 
   public ObjectValidationResult(IList<ValidationResult>? errors,
                                 IList<ValidationResult>? warnings,
-                                IList<ValidationResult>? required)
+                                IList<ValidationResult>? missing)
   {
     this.Warnings = warnings ?? new List<ValidationResult>();
     this.Errors = errors ?? new List<ValidationResult>();
-    this.Required = required ?? new List<ValidationResult>();
+    this.Missing = missing ?? new List<ValidationResult>();
   }
 
   /// <summary>
@@ -30,12 +30,12 @@ public class ObjectValidationResult
   /// <summary>
   /// All errors, indicating a missing value caused by the <see cref="RequiredAttribute"/>
   /// </summary>
-  public IList<ValidationResult> Required { get; }
+  public IList<ValidationResult> Missing { get; }
 
   /// <summary>
   /// Is the validated object valid
   /// </summary>
-  public bool IsValid => !this.Errors.Any();
+  public bool IsValid => !this.Errors.Any() && !this.Missing.Any();
 
   /// <summary>
   /// Is the validated object valid, but has some warnings
@@ -67,67 +67,25 @@ public class ObjectValidationResult
   /// Is the property required and missing
   /// </summary>
   /// <param name="propertyName">Property Name</param>
-  /// <returns>Property is required or missing</returns>
-  public bool IsRequired(string propertyName) => this.Required.Any(x => x.MemberNames.Contains(propertyName));
+  /// <returns>Property is required and missing</returns>
+  public bool IsMissing(string propertyName) => this.Missing.Any(x => x.MemberNames.Contains(propertyName));
 
   /// <summary>
   /// Gets the error for a given property
   /// </summary>
   /// <param name="propertyName">Property Name</param>
   /// <returns>Error, Warning and IsRequired for property</returns>
-  public (string? error, string? warning, bool isRequired) GetPropertyError(string propertyName)
+  public (string? error, string? warning, bool isMissing) GetPropertyError(string propertyName)
   {
     var error = this.GetError(propertyName);
     var warning = this.GetWarning(propertyName);
-    var isRequired = this.IsRequired(propertyName);
+    var isMissing = this.IsMissing(propertyName);
 
-    if (isRequired)
+    if (isMissing)
       return (null, null, true);
     else if (error is null)
       return (null, warning, false);
     else
       return (error, null, false);
-  }
-}
-
-/// <summary>
-/// Validation result indicating a warning, not an error
-/// </summary>
-public class WarningValidationResult : ValidationResult
-{
-  public WarningValidationResult(string errorMessage)
-    : base(errorMessage)
-  {
-  }
-
-  public WarningValidationResult(string errorMessage, IEnumerable<string> memberNames)
-    : base(errorMessage, memberNames)
-  {
-  }
-
-  public WarningValidationResult(ValidationResult validationResult)
-    : base(validationResult)
-  {
-  }
-}
-
-/// <summary>
-/// Validation result indicating the property is required and missing
-/// </summary>
-public class RequiredValidationResult : ValidationResult
-{
-  internal RequiredValidationResult(ValidationResult validationResult)
-    : base(validationResult)
-  {
-  }
-
-  public RequiredValidationResult(string? errorMessage)
-    : base(errorMessage)
-  {
-  }
-
-  public RequiredValidationResult(string? errorMessage, IEnumerable<string>? memberNames)
-    : base(errorMessage, memberNames)
-  {
   }
 }
