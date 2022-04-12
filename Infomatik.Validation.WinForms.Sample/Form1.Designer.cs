@@ -57,7 +57,7 @@
       this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Username", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.validationStatusProvider1.SetErrorMessage(this.textBox1, "");
       this.validationStatusProvider1.SetIconAlignment(this.textBox1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.textBox1, 0);
+      this.validationStatusProvider1.SetIconPadding(this.textBox1, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.textBox1, false);
       this.textBox1.Location = new System.Drawing.Point(105, 12);
       this.textBox1.Name = "textBox1";
@@ -70,7 +70,7 @@
       this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "Birthdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.validationStatusProvider1.SetErrorMessage(this.dateTimePicker1, "");
       this.validationStatusProvider1.SetIconAlignment(this.dateTimePicker1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.dateTimePicker1, 0);
+      this.validationStatusProvider1.SetIconPadding(this.dateTimePicker1, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.dateTimePicker1, false);
       this.dateTimePicker1.Location = new System.Drawing.Point(105, 128);
       this.dateTimePicker1.Name = "dateTimePicker1";
@@ -82,7 +82,7 @@
       // 
       this.validationStatusProvider1.SetErrorMessage(this.label1, "");
       this.validationStatusProvider1.SetIconAlignment(this.label1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.label1, 0);
+      this.validationStatusProvider1.SetIconPadding(this.label1, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.label1, false);
       this.label1.Location = new System.Drawing.Point(7, 12);
       this.label1.Name = "label1";
@@ -96,7 +96,7 @@
       // 
       this.validationStatusProvider1.SetErrorMessage(this.label2, "");
       this.validationStatusProvider1.SetIconAlignment(this.label2, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.label2, 0);
+      this.validationStatusProvider1.SetIconPadding(this.label2, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.label2, false);
       this.label2.Location = new System.Drawing.Point(7, 41);
       this.label2.Name = "label2";
@@ -111,7 +111,7 @@
       this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.validationStatusProvider1.SetErrorMessage(this.textBox2, "");
       this.validationStatusProvider1.SetIconAlignment(this.textBox2, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.textBox2, 0);
+      this.validationStatusProvider1.SetIconPadding(this.textBox2, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.textBox2, false);
       this.textBox2.Location = new System.Drawing.Point(105, 41);
       this.textBox2.Name = "textBox2";
@@ -124,7 +124,7 @@
       // 
       this.validationStatusProvider1.SetErrorMessage(this.label3, "");
       this.validationStatusProvider1.SetIconAlignment(this.label3, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.label3, 0);
+      this.validationStatusProvider1.SetIconPadding(this.label3, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.label3, false);
       this.label3.Location = new System.Drawing.Point(7, 70);
       this.label3.Name = "label3";
@@ -139,7 +139,7 @@
       this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Name", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.validationStatusProvider1.SetErrorMessage(this.textBox3, "");
       this.validationStatusProvider1.SetIconAlignment(this.textBox3, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.textBox3, 0);
+      this.validationStatusProvider1.SetIconPadding(this.textBox3, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.textBox3, false);
       this.textBox3.Location = new System.Drawing.Point(105, 70);
       this.textBox3.Name = "textBox3";
@@ -151,7 +151,7 @@
       // 
       this.validationStatusProvider1.SetErrorMessage(this.label4, "");
       this.validationStatusProvider1.SetIconAlignment(this.label4, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.label4, 0);
+      this.validationStatusProvider1.SetIconPadding(this.label4, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.label4, false);
       this.label4.Location = new System.Drawing.Point(7, 128);
       this.label4.Name = "label4";
@@ -165,7 +165,7 @@
       // 
       this.validationStatusProvider1.SetErrorMessage(this.label5, "");
       this.validationStatusProvider1.SetIconAlignment(this.label5, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.label5, 0);
+      this.validationStatusProvider1.SetIconPadding(this.label5, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.label5, false);
       this.label5.Location = new System.Drawing.Point(7, 99);
       this.label5.Name = "label5";
@@ -180,7 +180,7 @@
       this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Mail", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.validationStatusProvider1.SetErrorMessage(this.textBox4, "");
       this.validationStatusProvider1.SetIconAlignment(this.textBox4, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this.textBox4, 0);
+      this.validationStatusProvider1.SetIconPadding(this.textBox4, 5);
       this.validationStatusProvider1.SetIsMissingValue(this.textBox4, false);
       this.textBox4.Location = new System.Drawing.Point(105, 99);
       this.textBox4.Name = "textBox4";
@@ -216,7 +216,7 @@
       this.Controls.Add(this.textBox1);
       this.validationStatusProvider1.SetErrorMessage(this, "");
       this.validationStatusProvider1.SetIconAlignment(this, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
-      this.validationStatusProvider1.SetIconPadding(this, 0);
+      this.validationStatusProvider1.SetIconPadding(this, 5);
       this.validationStatusProvider1.SetIsMissingValue(this, false);
       this.Name = "Form1";
       this.Text = "Sample";
