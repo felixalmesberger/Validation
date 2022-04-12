@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Infomatik.Validation.WinForms.Sample
 {
   internal static class Program
@@ -11,6 +13,9 @@ namespace Infomatik.Validation.WinForms.Sample
       // To customize application configuration such as set high DPI settings or default font,
       // see https://aka.ms/applicationconfiguration.
       ApplicationConfiguration.Initialize();
+      Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+      Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+      
       Application.Run(new Form1());
 
     }

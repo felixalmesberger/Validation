@@ -61,7 +61,7 @@ namespace Infomatik.Validation.WinForms.i18n {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Requiered field ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Required field ähnelt.
         /// </summary>
         internal static string Required {
             get {
