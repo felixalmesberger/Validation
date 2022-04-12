@@ -15,4 +15,4 @@ If you want to visualize the validation results on a Windows Forms user control 
 
 ![sample](docs/sample.png)
 
-[more info](docs/bindingsourcevalidato.md)
+[more info](docs/bindingsourcevalidator.md)
