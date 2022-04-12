@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Infomatik.Validation.WinForms;
 
@@ -9,7 +10,7 @@ namespace Infomatik.Validation.WinForms;
 /// an error provider
 /// </summary>
 [ToolboxBitmap(typeof(ErrorProvider))]
-public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
+public class BindingSourceValidator : Component, ISupportInitialize
 {
   #region events
 
@@ -23,8 +24,10 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
 
   #region fields
 
+  private readonly IContainer? container;
   private bool isValid;
   private readonly ThrottledUiAction throttledValidation;
+  private BindingSource? bindingSource;
 
   #endregion
 
@@ -36,9 +39,10 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
   }
 
   public BindingSourceValidator(IContainer container)
-    : base(container)
+    : this()
   {
-    this.throttledValidation = new(this.ValidateBindings);
+    this.container = container;
+    container?.Add(this);
   }
 
   #endregion
@@ -46,23 +50,90 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
   #region properties
 
   /// <summary>
-  /// Error provider that will be used to show errors
+  /// ValidationStatusProvider used to show control validation results
   /// </summary>
-  public ControlStatusProvider? ControlStatusProvider { get; set; }
+  [Category("BindingSourceValidator")]
+  [Description]
+  public ValidationStatusProvider? ValidationStatusProvider { get; set; }
 
-  public IObjectValidator Validator { get; set; } = ObjectValidator.Instance;
+  /// <summary>
+  /// Used validator
+  /// </summary>
+  [Category("BindingSourceValidator")]
+  [Description("Used validator")]
+  public IObjectValidator Validator { get; set; } = ObjectValidator.Default;
 
+  /// <summary>
+  /// Gets the validation state of monitored object
+  /// </summary>
   public bool IsValid
   {
     get => this.isValid;
-    set { this.isValid = value; this.OnIsValidChanged(); }
+    private set { this.isValid = value; this.OnIsValidChanged(); }
+  }
+
+  /// <summary>
+  /// Gets or sets, whether the validation is suspended
+  /// </summary>
+  [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+  [Category("BindingSourceValidator")]
+  public bool SuspendValidation { get; set; }
+
+  [DefaultValue(300)]
+  [Category("BindingSourceValidator")]
+  public int ThrottleTimeInMs
+  {
+    get => this.throttledValidation.ThrottleTimeInMs;
+    set => this.throttledValidation.ThrottleTimeInMs = value;
+  }
+
+  /// <summary>
+  /// All bindings belonging to <see cref="BindingSource"/>
+  /// </summary>
+  private IEnumerable<Binding> Bindings => this.bindingSource?.CurrencyManager.Bindings.OfType<Binding>() ?? Enumerable.Empty<Binding>();
+
+
+  /// <summary>
+  /// Gets or sets the monitored binding source
+  /// </summary>
+  public BindingSource? BindingSource
+  {
+    get => this.bindingSource;
+    set
+    {
+      if (value == this.BindingSource)
+        return;
+
+      this.DetachFromBindingSource();
+      this.bindingSource = value;
+      this.AttachToBindingSource();
+    }
   }
 
   #endregion
 
-  public bool SuspendValidation { get; set; }
+  protected virtual bool AttachToBindingSource()
+  {
+    if (this.BindingSource is null)
+      return false;
 
-  protected override void BindingComplete(object? sender, BindingCompleteEventArgs e)
+    this.BindingSource.BindingComplete += this.BindingComplete;
+    this.BindingSource.DataSourceChanged += this.DataSourceChanged;
+
+    return true;
+  }
+
+  protected virtual bool DetachFromBindingSource()
+  {
+    if (this.BindingSource is null)
+      return false;
+
+    this.BindingSource.BindingComplete -= this.BindingComplete;
+    this.BindingSource.DataSourceChanged -= this.DataSourceChanged;
+
+    return true;
+  }
+  private void BindingComplete(object? sender, BindingCompleteEventArgs e)
   {
     var hasBindingError = e.Exception != null;
     if (hasBindingError)
@@ -75,7 +146,7 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
     }
   }
 
-  protected override void DataSourceChanged(object? sender, EventArgs e)
+  private void DataSourceChanged(object? sender, EventArgs e)
   {
     this.throttledValidation.Invoke();
   }
@@ -85,7 +156,7 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
     if (e.Binding?.Control is null)
       return;
 
-    this.ControlStatusProvider?.SetErrorMessage(e.Binding.Control, e.ErrorText);
+    this.ValidationStatusProvider?.SetErrorMessage(e.Binding.Control, e.ErrorText);
   }
 
   private void ValidateBindings()
@@ -96,7 +167,7 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
     if (this.BindingSource?.DataSource is null)
       return;
 
-    if (this.ControlStatusProvider is null)
+    if (this.ValidationStatusProvider is null)
       return;
 
     var validationResult = this.Validator.Validate(this.BindingSource.DataSource, cancelOnFirstError: false);
@@ -112,18 +183,18 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
 
       // if already showing required error, forget the others
       if (!isRequired || string.IsNullOrEmpty(error))
-        this.ControlStatusProvider.SetErrorMessage(binding.Control, error);
+        this.ValidationStatusProvider.SetErrorMessage(binding.Control, error);
 
-      this.ControlStatusProvider.SetWarnMessage(binding.Control, warning);
-      this.ControlStatusProvider.SetRequiredError(binding.Control, isRequired);
+      this.ValidationStatusProvider.SetWarnMessage(binding.Control, warning);
+      this.ValidationStatusProvider.SetRequiredError(binding.Control, isRequired);
     }
 
     this.IsValid = validationResult.IsValid;
   }
 
-  private bool TryFindControlStatusProvider(out ControlStatusProvider? errorProvider)
+  private bool TryFindControlStatusProvider(out ValidationStatusProvider? errorProvider)
   {
-    errorProvider = this.Container?.Components.OfType<ControlStatusProvider>().FirstOrDefault();
+    errorProvider = this.container?.Components.OfType<ValidationStatusProvider>().FirstOrDefault();
     return errorProvider is not null;
   }
 
@@ -133,10 +204,13 @@ public class BindingSourceValidator : BindingSourceBehaviour, ISupportInitialize
 
   public void EndInit()
   {
-    if (this.TryFindControlStatusProvider(out var errorProvider) && this.ControlStatusProvider is null)
-      this.ControlStatusProvider = errorProvider;
+    if (this.TryFindControlStatusProvider(out var errorProvider) && this.ValidationStatusProvider is null)
+      this.ValidationStatusProvider = errorProvider;
   }
 
+  /// <summary>
+  /// Manually fires a validation
+  /// </summary>
   public void Validate()
   {
     this.ValidateBindings();

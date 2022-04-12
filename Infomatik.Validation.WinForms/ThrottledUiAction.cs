@@ -16,8 +16,11 @@ internal class ThrottledUiAction
 
   private readonly System.Windows.Forms.Timer timer;
   private readonly Action action;
+  private int throttleTimeInMs;
 
   #endregion
+
+  #region constructors
 
   public ThrottledUiAction(Action action)
     : this(action, TimeSpan.FromMilliseconds(300))
@@ -36,11 +39,39 @@ internal class ThrottledUiAction
     this.timer.Tick += this.TimerTick;
   }
 
+  #endregion
+
+  #region properties
+
+  /// <summary>
+  /// Gets and sets the minimum time between invocations of the action. If 0 it will not be throttled.
+  /// </summary>
+  public int ThrottleTimeInMs
+  {
+    get => this.throttleTimeInMs;
+    set
+    {
+      this.throttleTimeInMs = value;
+
+      if (this.throttleTimeInMs > 0)
+        this.timer.Interval = value;
+    }
+  }
+
+  #endregion
+
   [MethodImpl(MethodImplOptions.Synchronized)]
   public void Invoke()
   {
-    this.timer.Stop();
-    this.timer.Start();
+    if (this.ThrottleTimeInMs == 0)
+    {
+      this.action.Invoke();
+    }
+    else
+    {
+      this.timer.Stop();
+      this.timer.Start();
+    }
   }
 
   private void TimerTick(object? sender, EventArgs e)

@@ -30,6 +30,7 @@
     {
       this.components = new System.ComponentModel.Container();
       Infomatik.Validation.ObjectValidator objectValidator1 = new Infomatik.Validation.ObjectValidator();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -42,7 +43,7 @@
       this.label5 = new System.Windows.Forms.Label();
       this.textBox4 = new System.Windows.Forms.TextBox();
       this.bindingSourceValidator = new Infomatik.Validation.WinForms.BindingSourceValidator(this.components);
-      this.controlStatusProvider = new Infomatik.Validation.WinForms.ControlStatusProvider(this.components);
+      this.validationStatusProvider = new Infomatik.Validation.WinForms.ValidationStatusProvider(this.components);
       this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceValidator)).BeginInit();
@@ -56,127 +57,150 @@
       // textBox1
       // 
       this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Username", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.controlStatusProvider.SetErrorMessage(this.textBox1, "");
+      this.validationStatusProvider.SetErrorMessage(this.textBox1, "");
+      this.validationStatusProvider.SetIconAlignment(this.textBox1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.textBox1, 5);
       this.textBox1.Location = new System.Drawing.Point(105, 12);
       this.textBox1.Name = "textBox1";
-      this.controlStatusProvider.SetRequiredError(this.textBox1, false);
+      this.validationStatusProvider.SetRequiredError(this.textBox1, false);
       this.textBox1.Size = new System.Drawing.Size(200, 23);
       this.textBox1.TabIndex = 0;
-      this.controlStatusProvider.SetWarnMessage(this.textBox1, "");
+      this.validationStatusProvider.SetWarnMessage(this.textBox1, "");
       // 
       // dateTimePicker1
       // 
       this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "Birthdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.controlStatusProvider.SetErrorMessage(this.dateTimePicker1, "");
+      this.validationStatusProvider.SetErrorMessage(this.dateTimePicker1, "");
+      this.validationStatusProvider.SetIconAlignment(this.dateTimePicker1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.dateTimePicker1, 5);
       this.dateTimePicker1.Location = new System.Drawing.Point(105, 128);
       this.dateTimePicker1.Name = "dateTimePicker1";
-      this.controlStatusProvider.SetRequiredError(this.dateTimePicker1, false);
+      this.validationStatusProvider.SetRequiredError(this.dateTimePicker1, false);
       this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
       this.dateTimePicker1.TabIndex = 1;
-      this.controlStatusProvider.SetWarnMessage(this.dateTimePicker1, "");
+      this.validationStatusProvider.SetWarnMessage(this.dateTimePicker1, "");
       // 
       // label1
       // 
-      this.controlStatusProvider.SetErrorMessage(this.label1, "");
+      this.validationStatusProvider.SetErrorMessage(this.label1, "");
+      this.validationStatusProvider.SetIconAlignment(this.label1, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.label1, 5);
       this.label1.Location = new System.Drawing.Point(7, 12);
       this.label1.Name = "label1";
-      this.controlStatusProvider.SetRequiredError(this.label1, false);
+      this.validationStatusProvider.SetRequiredError(this.label1, false);
       this.label1.Size = new System.Drawing.Size(92, 23);
       this.label1.TabIndex = 2;
       this.label1.Text = "Username:";
       this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.controlStatusProvider.SetWarnMessage(this.label1, "");
+      this.validationStatusProvider.SetWarnMessage(this.label1, "");
       // 
       // label2
       // 
-      this.controlStatusProvider.SetErrorMessage(this.label2, "");
+      this.validationStatusProvider.SetErrorMessage(this.label2, "");
+      this.validationStatusProvider.SetIconAlignment(this.label2, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.label2, 5);
       this.label2.Location = new System.Drawing.Point(7, 41);
       this.label2.Name = "label2";
-      this.controlStatusProvider.SetRequiredError(this.label2, false);
+      this.validationStatusProvider.SetRequiredError(this.label2, false);
       this.label2.Size = new System.Drawing.Size(92, 23);
       this.label2.TabIndex = 4;
       this.label2.Text = "Password:";
       this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.controlStatusProvider.SetWarnMessage(this.label2, "");
+      this.validationStatusProvider.SetWarnMessage(this.label2, "");
       // 
       // textBox2
       // 
       this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.controlStatusProvider.SetErrorMessage(this.textBox2, "");
+      this.validationStatusProvider.SetErrorMessage(this.textBox2, "");
+      this.validationStatusProvider.SetIconAlignment(this.textBox2, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.textBox2, 5);
       this.textBox2.Location = new System.Drawing.Point(105, 41);
       this.textBox2.Name = "textBox2";
-      this.controlStatusProvider.SetRequiredError(this.textBox2, false);
+      this.validationStatusProvider.SetRequiredError(this.textBox2, false);
       this.textBox2.Size = new System.Drawing.Size(200, 23);
       this.textBox2.TabIndex = 3;
       this.textBox2.UseSystemPasswordChar = true;
-      this.controlStatusProvider.SetWarnMessage(this.textBox2, "");
+      this.validationStatusProvider.SetWarnMessage(this.textBox2, "");
       // 
       // label3
       // 
-      this.controlStatusProvider.SetErrorMessage(this.label3, "");
+      this.validationStatusProvider.SetErrorMessage(this.label3, "");
+      this.validationStatusProvider.SetIconAlignment(this.label3, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.label3, 5);
       this.label3.Location = new System.Drawing.Point(7, 70);
       this.label3.Name = "label3";
-      this.controlStatusProvider.SetRequiredError(this.label3, false);
+      this.validationStatusProvider.SetRequiredError(this.label3, false);
       this.label3.Size = new System.Drawing.Size(92, 23);
       this.label3.TabIndex = 6;
       this.label3.Text = "Name:";
       this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.controlStatusProvider.SetWarnMessage(this.label3, "");
+      this.validationStatusProvider.SetWarnMessage(this.label3, "");
       // 
       // textBox3
       // 
       this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Name", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.controlStatusProvider.SetErrorMessage(this.textBox3, "");
+      this.validationStatusProvider.SetErrorMessage(this.textBox3, "");
+      this.validationStatusProvider.SetIconAlignment(this.textBox3, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.textBox3, 5);
       this.textBox3.Location = new System.Drawing.Point(105, 70);
       this.textBox3.Name = "textBox3";
-      this.controlStatusProvider.SetRequiredError(this.textBox3, false);
+      this.validationStatusProvider.SetRequiredError(this.textBox3, false);
       this.textBox3.Size = new System.Drawing.Size(200, 23);
       this.textBox3.TabIndex = 5;
-      this.controlStatusProvider.SetWarnMessage(this.textBox3, "");
+      this.validationStatusProvider.SetWarnMessage(this.textBox3, "");
       // 
       // label4
       // 
-      this.controlStatusProvider.SetErrorMessage(this.label4, "");
+      this.validationStatusProvider.SetErrorMessage(this.label4, "");
+      this.validationStatusProvider.SetIconAlignment(this.label4, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.label4, 5);
       this.label4.Location = new System.Drawing.Point(7, 128);
       this.label4.Name = "label4";
-      this.controlStatusProvider.SetRequiredError(this.label4, false);
+      this.validationStatusProvider.SetRequiredError(this.label4, false);
       this.label4.Size = new System.Drawing.Size(92, 23);
       this.label4.TabIndex = 7;
       this.label4.Text = "Birthdate:";
       this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.controlStatusProvider.SetWarnMessage(this.label4, "");
+      this.validationStatusProvider.SetWarnMessage(this.label4, "");
       // 
       // label5
       // 
-      this.controlStatusProvider.SetErrorMessage(this.label5, "");
+      this.validationStatusProvider.SetErrorMessage(this.label5, "");
+      this.validationStatusProvider.SetIconAlignment(this.label5, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.label5, 5);
       this.label5.Location = new System.Drawing.Point(7, 99);
       this.label5.Name = "label5";
-      this.controlStatusProvider.SetRequiredError(this.label5, false);
+      this.validationStatusProvider.SetRequiredError(this.label5, false);
       this.label5.Size = new System.Drawing.Size(92, 23);
       this.label5.TabIndex = 9;
       this.label5.Text = "Mail:";
       this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.controlStatusProvider.SetWarnMessage(this.label5, "");
+      this.validationStatusProvider.SetWarnMessage(this.label5, "");
       // 
       // textBox4
       // 
       this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Mail", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.controlStatusProvider.SetErrorMessage(this.textBox4, "");
+      this.validationStatusProvider.SetErrorMessage(this.textBox4, "");
+      this.validationStatusProvider.SetIconAlignment(this.textBox4, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this.textBox4, 5);
       this.textBox4.Location = new System.Drawing.Point(105, 99);
       this.textBox4.Name = "textBox4";
-      this.controlStatusProvider.SetRequiredError(this.textBox4, false);
+      this.validationStatusProvider.SetRequiredError(this.textBox4, false);
       this.textBox4.Size = new System.Drawing.Size(200, 23);
       this.textBox4.TabIndex = 8;
-      this.controlStatusProvider.SetWarnMessage(this.textBox4, "");
+      this.validationStatusProvider.SetWarnMessage(this.textBox4, "");
       // 
       // bindingSourceValidator
       // 
       this.bindingSourceValidator.BindingSource = this.bindingSource;
-      this.bindingSourceValidator.ControlStatusProvider = this.controlStatusProvider;
-      this.bindingSourceValidator.IsValid = false;
-      this.bindingSourceValidator.SuspendValidation = false;
-      objectValidator1.ServiceProvider = null;
+      this.bindingSourceValidator.ThrottleTimeInMs = 300;
+      this.bindingSourceValidator.ValidationStatusProvider = this.validationStatusProvider;
       this.bindingSourceValidator.Validator = objectValidator1;
+      // 
+      // validationStatusProvider
+      // 
+      this.validationStatusProvider.ErrorIcon = ((System.Drawing.Icon)(resources.GetObject("validationStatusProvider.ErrorIcon")));
+      this.validationStatusProvider.WarnIcon = ((System.Drawing.Icon)(resources.GetObject("validationStatusProvider.WarnIcon")));
       // 
       // errorProvider1
       // 
@@ -198,11 +222,13 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.dateTimePicker1);
       this.Controls.Add(this.textBox1);
-      this.controlStatusProvider.SetErrorMessage(this, "");
+      this.validationStatusProvider.SetErrorMessage(this, "");
+      this.validationStatusProvider.SetIconAlignment(this, System.Windows.Forms.ErrorIconAlignment.MiddleRight);
+      this.validationStatusProvider.SetIconPadding(this, 5);
       this.Name = "Form1";
-      this.controlStatusProvider.SetRequiredError(this, false);
+      this.validationStatusProvider.SetRequiredError(this, false);
       this.Text = "Sample";
-      this.controlStatusProvider.SetWarnMessage(this, "");
+      this.validationStatusProvider.SetWarnMessage(this, "");
       ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceValidator)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -224,7 +250,7 @@
     private Label label4;
     private Label label5;
     private TextBox textBox4;
-    private ControlStatusProvider controlStatusProvider;
+    private ValidationStatusProvider validationStatusProvider;
     private BindingSourceValidator bindingSourceValidator;
     private ErrorProvider errorProvider1;
   }

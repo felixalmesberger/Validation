@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infomatik.Validation;
 
@@ -13,13 +14,14 @@ public class ObjectValidator : IObjectValidator
   /// <summary>
   /// Service Provider used to create ValidationContext
   /// </summary>
+  [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
   public IServiceProvider? ServiceProvider { get; set; }
 
   #endregion
 
   #region singleton
 
-  public static ObjectValidator Instance { get; } = new();
+  public static ObjectValidator Default { get; } = new();
 
   #endregion
 

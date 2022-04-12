@@ -14,8 +14,7 @@ namespace Infomatik.Validation.WinForms;
 [ProvideProperty("RequiredError", typeof(Control))]
 [ProvideProperty("ErrorMessage", typeof(Control))]
 [ProvideProperty("WarnMessage", typeof(Control))]
-
-public class ControlStatusProvider : Component, IExtenderProvider
+public class ValidationStatusProvider : Component, IExtenderProvider
 {
   #region fields
 
@@ -35,24 +34,65 @@ public class ControlStatusProvider : Component, IExtenderProvider
 
   #region constructors
 
-  public ControlStatusProvider()
+  public ValidationStatusProvider()
   {
-    this.SetErrorProviderIcon(this.errorProvider, (Bitmap)Resources.Error.Clone());
-    this.SetErrorProviderIcon(this.warnProvider, (Bitmap)Resources.Warning.Clone());
+    this.warnProvider.Icon = SystemIcons.Warning;
   }
 
-  private void SetErrorProviderIcon(ErrorProvider provider, Bitmap icon)
-  {
-    provider.Icon = Icon.FromHandle(new Bitmap(icon).GetHicon());
-  }
-
-  public ControlStatusProvider(IContainer? container)
+  public ValidationStatusProvider(IContainer? container)
     : this()
   {
     container?.Add(this);
   }
 
   #endregion
+
+  #region properties
+
+  public string RequiredFallbackErrorMessage => Strings.Required;
+
+  #endregion
+
+  #region properties
+
+  /// <summary>
+  /// Gets or sets the Icon that displayed next to a control when a warn has been set for the control.
+  /// </summary>
+  [Category("ValidationStatusProvider")]
+  [Description(@"Gets or sets the Icon that displayed next to a control when a warn has been set for the control.")]
+  public Icon? WarnIcon
+  {
+    get => this.warnProvider.Icon;
+    set
+    {
+      if (value is null)
+        return;
+
+      this.warnProvider.Icon = value;
+    }
+  }
+
+
+  /// <summary>
+  /// Gets or sets the Icon that displayed next to a control when an error has been set for the control.
+  /// </summary>
+  [Category("ValidationStatusProvider")]
+  [Description(@"Gets or sets the Icon that displayed next to a control when an error has been set for the control.")]
+  public Icon? ErrorIcon
+  {
+    get => this.errorProvider.Icon;
+    set
+    {
+      if (value is null)
+        return;
+
+      this.errorProvider.Icon = value;
+    }
+  }
+
+  #endregion
+
+  #region provided properties
 
   public void SetIconPadding(Control control, int padding)
   {
@@ -82,7 +122,7 @@ public class ControlStatusProvider : Component, IExtenderProvider
     this.SetErrorMessage(control, null);
   }
 
-  public string RequiredFallbackErrorMessage => Strings.Required;
+  #endregion
 
   public void SetRequiredError(Control control, bool showRequired)
   {
@@ -93,7 +133,7 @@ public class ControlStatusProvider : Component, IExtenderProvider
       return;
     }
 
-    this.InitializeControlIconAlignment(control);
+    this.InitializeDefaultControlIconAlignment(control);
 
     var canUseRequiredProvider = this.requiredProvider.CanExtend(control);
     var errorProviderShowingRequiredMessage = this.errorProvider.GetError(control) == RequiredFallbackErrorMessage;
@@ -117,7 +157,7 @@ public class ControlStatusProvider : Component, IExtenderProvider
       return;
     }
 
-    this.InitializeControlIconAlignment(control);
+    this.InitializeDefaultControlIconAlignment(control);
 
     if (message is not null)
       this.warnProvider.SetError(control, null);
@@ -134,13 +174,18 @@ public class ControlStatusProvider : Component, IExtenderProvider
       return;
     }
 
-    this.InitializeControlIconAlignment(control);
+    this.InitializeDefaultControlIconAlignment(control);
 
     if (message is not null)
       this.errorProvider.SetError(control, null);
     this.warnProvider.SetError(control, message);
   }
 
+  /// <summary>
+  /// Visualize a warn message
+  /// </summary>
+  [Category("ValidationStatusProvider")]
+  [Description("Visualize a warn message")]
   public string? GetWarnMessage(Control control)
   {
     // ReSharper disable once SuspiciousTypeConversion.Global
@@ -150,6 +195,12 @@ public class ControlStatusProvider : Component, IExtenderProvider
     return this.warnProvider.GetError(control);
   }
 
+
+  /// <summary>
+  /// Visualize, that this control is bound to a required property
+  /// </summary>
+  [Category("ValidationStatusProvider")]
+  [Description("Visualize that this is a required field")]
   public bool GetRequiredError(Control control)
   {
     // ReSharper disable once SuspiciousTypeConversion.Global
@@ -159,6 +210,11 @@ public class ControlStatusProvider : Component, IExtenderProvider
     return this.requiredProvider.GetShowRequiredMessage(control);
   }
 
+  /// <summary>
+  /// Visualize an error message
+  /// </summary>
+  [Category("ValidationStatusProvider")]
+  [Description("Visualize an error message")]
   public string? GetErrorMessage(Control control)
   {
     // ReSharper disable once SuspiciousTypeConversion.Global
@@ -168,13 +224,24 @@ public class ControlStatusProvider : Component, IExtenderProvider
     return this.errorProvider.GetError(control);
   }
 
+  /// <summary>
+  /// Is the control supported by the ValidationStatusProvider
+  /// </summary>
   public bool CanExtend(object extendee)
   {
     return extendee is Control;
   }
 
-  private void InitializeControlIconAlignment(Control control)
+  /// <summary>
+  /// Sets the default icon alignment to middle right with padding 5
+  /// </summary>
+  /// <param name="control"></param>
+  private void InitializeDefaultControlIconAlignment(Control control)
   {
+    // if padding != 0, padding already set so return
+    if (this.errorProvider.GetIconPadding(control) != 0)
+      return;
+
     this.errorProvider.SetIconAlignment(control, ErrorIconAlignment.MiddleRight);
     this.errorProvider.SetIconPadding(control, 5);
 

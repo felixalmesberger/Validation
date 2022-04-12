@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.stafact" Version="1.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Infomatik.Validation.Tests\Infomatik.Validation.Tests.csproj" />
+    <ProjectReference Include="..\Infomatik.Validation.WinForms\Infomatik.Validation.WinForms.csproj" />
+    <ProjectReference Include="..\Infomatik.Validation\Infomatik.Validation.csproj" />
+  </ItemGroup>
+
+</Project>
