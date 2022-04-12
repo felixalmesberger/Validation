@@ -1,5 +1,5 @@
-![logo](docs/infomatik-validation.png)
-
+![logo](docs/infomatik-validation-dark-mode.png#gh-dark-mode-only)
+![logo](docs/infomatik-validation-light-mode.png#gh-light-mode-only)
 # Extended Valdidation for .NET & Windows Forms
 
 This library aims to replace the static [Validator](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validator) and offer extended functionality:
