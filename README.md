@@ -1,3 +1,5 @@
+![logo](docs/infomatik-validation.png)
+
 # Extended Valdidation for .NET & Windows Forms
 
 This library aims to replace the static [Validator](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validator) and offer extended functionality:
