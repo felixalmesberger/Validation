@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Infomatik.Validation.WinForms.i18n;
 
 namespace Infomatik.Validation.WinForms;

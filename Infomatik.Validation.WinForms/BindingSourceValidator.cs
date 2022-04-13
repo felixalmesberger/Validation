@@ -1,5 +1,12 @@
-﻿using System.ComponentModel;
+﻿#nullable enable
+
+using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace Infomatik.Validation.WinForms;
 

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infomatik.Validation.WinFor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.NETFramework", "Infomatik.Validation.NETFramework\Infomatik.Validation.NETFramework.csproj", "{5FD04965-3436-4324-B8B9-E8FAB680C42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.WinForms.NETFramework", "Infomatik.Validation.WinForms.NETFramework1\Infomatik.Validation.WinForms.NETFramework.csproj", "{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.WinForms.NETFramework", "Infomatik.Validation.WinForms.NETFramework\Infomatik.Validation.WinForms.NETFramework.csproj", "{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

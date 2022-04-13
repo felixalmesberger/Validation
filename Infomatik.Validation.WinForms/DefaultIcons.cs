@@ -1,4 +1,6 @@
-﻿using Infomatik.Validation.WinForms.Properties;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Infomatik.Validation.WinForms.Properties;
 
 namespace Infomatik.Validation.WinForms;
 

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 using Infomatik.Validation.WinForms.i18n;
 
 namespace Infomatik.Validation.WinForms;
