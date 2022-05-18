@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.NETFra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.WinForms.NETFramework", "Infomatik.Validation.WinForms.NETFramework\Infomatik.Validation.WinForms.NETFramework.csproj", "{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infomatik.Validation.Mvvm", "Infomatik.Validation.Mvvm\Infomatik.Validation.Mvvm.csproj", "{DA284A2A-AFD8-4F09-A760-5C0C7DDF04D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{695686B3-F1C8-4A87-B52A-DFB0221D7E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA284A2A-AFD8-4F09-A760-5C0C7DDF04D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA284A2A-AFD8-4F09-A760-5C0C7DDF04D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA284A2A-AFD8-4F09-A760-5C0C7DDF04D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA284A2A-AFD8-4F09-A760-5C0C7DDF04D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
