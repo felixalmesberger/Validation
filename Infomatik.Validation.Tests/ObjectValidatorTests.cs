@@ -90,6 +90,13 @@ namespace Infomatik.Validation.Tests
       var result = this.validator.Validate(instance, false);
       Assert.Equal(1, result.Errors.Count);
     }
+
+    [Fact]
+    public void Validate_DeepValidation_Works()
+    {
+      var instance = new DeepPropertyTestObject();
+      var result = this.validator.Validate(instance, true);
+    }
   }
 
   public class PropertyAnnotatedWithWarningAttribute_TestClass

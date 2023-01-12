@@ -1,4 +1,6 @@
-﻿namespace Infomatik.Validation;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Infomatik.Validation;
 
 /// <summary>
 /// Validate objects
@@ -11,5 +13,5 @@ public interface IObjectValidator
   /// <param name="instance">The object instance to test</param>
   /// <param name="breakOnFirstError">Cancel validation after first error</param>
   /// <returns>Result of the validation</returns>
-  ObjectValidationResult Validate(object instance, bool breakOnFirstError);
+  ObjectValidationResult Validate(object instance, bool breakOnFirstError, ValidationContext? context = null);
 }

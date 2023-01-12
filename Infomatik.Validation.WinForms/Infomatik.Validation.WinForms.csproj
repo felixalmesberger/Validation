@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -15,10 +15,21 @@
 		<PackageProjectUrl>https://github.com/felixalmesberger/Validation</PackageProjectUrl>
 		<Copyright>Infomatik 2022</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<LangVer>latest</LangVer>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Infomatik.Validation\Infomatik.Validation.csproj" />
+		<Using Remove="System.Net.Http" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='net48'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.configuration" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

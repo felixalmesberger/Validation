@@ -4,12 +4,24 @@ using System.Linq;
 
 namespace Infomatik.Validation;
 
+public interface IDeepValidationResult : IEnumerable<ObjectValidationResult>
+{
+  /// <summary>
+  ///     Gets the collection of member names affected by this result.  The collection may be empty but will never be null.
+  /// </summary>
+  IEnumerable<string> MemberNames { get; }
+
+  /// <summary>
+  ///     Gets the error message for this result.  It may be null.
+  /// </summary>
+  string? ErrorMessage { get; set; }
+}
+
 /// <summary>
 /// Contains the results of an object validation
 /// </summary>
 public class ObjectValidationResult
 {
-
   public ObjectValidationResult(IList<ValidationResult>? errors,
                                 IList<ValidationResult>? warnings,
                                 IList<ValidationResult>? missing)
@@ -17,6 +29,9 @@ public class ObjectValidationResult
     this.Warnings = warnings ?? new List<ValidationResult>();
     this.Errors = errors ?? new List<ValidationResult>();
     this.Missing = missing ?? new List<ValidationResult>();
+
+    foreach (var deepValidationResult in this.DeepValidationResults.ToList())
+      this.MergeWith(deepValidationResult);
   }
 
   /// <summary>
@@ -89,5 +104,55 @@ public class ObjectValidationResult
       return (null, warning, false);
     else
       return (error, null, false);
+  }
+
+  public IEnumerable<ValidationResult> EnumerateValidationResults()
+  {
+    foreach (var missing in this.Missing)
+      yield return missing;
+
+    foreach (var warning in this.Warnings)
+      yield return warning;
+
+    foreach (var error in this.Errors)
+      yield return error;
+  }
+
+  internal IEnumerable<IDeepValidationResult> DeepValidationResults
+    => this.EnumerateValidationResults().OfType<IDeepValidationResult>();
+
+  private void MergeWith(IDeepValidationResult deepValidation)
+  {
+    if (deepValidation is WarningValidationResult warning)
+      this.Warnings.Add(new WarningValidationResult(warning.ErrorMessage, warning.MemberNames));
+    else if (deepValidation is ValidationResult error)
+      this.Errors.Add(new ValidationResult(error.ErrorMessage, error.MemberNames));
+
+    var memberName = deepValidation.MemberNames.FirstOrDefault();
+
+    foreach (var child in deepValidation)
+    {
+      foreach (var error in child.Errors)
+        this.Errors.Add(this.WithParent(error, memberName));
+
+      foreach (var childMissing in child.Missing)
+        this.Missing.Add(this.WithParent(childMissing, memberName));
+
+      foreach (var childWarning in child.Warnings)
+        this.Warnings.Add(this.WithParent(childWarning, memberName));
+
+      foreach (var deepValidationResult in child.DeepValidationResults)
+        this.MergeWith(deepValidationResult);
+    }
+  }
+
+  private ValidationResult WithParent(ValidationResult me, string? parent)
+  {
+    if (string.IsNullOrEmpty(parent))
+      return me;
+
+    var memberNames = me.MemberNames.Select(x => $"{parent}.{x}").ToArray();
+
+    return new ValidationResult(me.ErrorMessage, memberNames);
   }
 }

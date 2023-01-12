@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("Infomatik.Validation.WinForms.NETFramework1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Infomatik.Validation.WinForms")]
+[assembly: AssemblyDescription("Extendend Validation for Objects in Windows Forms")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Infomatik.Validation.WinForms.NETFramework1")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCompany("Infomatik")]
+[assembly: AssemblyProduct("Infomatik.Validation.WinForms")]
+[assembly: AssemblyCopyright("Infomatik ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

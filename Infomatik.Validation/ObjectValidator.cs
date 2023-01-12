@@ -12,6 +12,9 @@ namespace Infomatik.Validation;
 public class ObjectValidator : IObjectValidator
 {
 
+  internal static readonly string ValidatorKey = "Validator";
+  internal static readonly string VisitedKey = "Visited";
+
   #region properties
 
   /// <summary>
@@ -34,9 +37,18 @@ public class ObjectValidator : IObjectValidator
   /// <param name="instance">The object instance to test</param>
   /// <param name="breakOnFirstError">Cancel validation after first error</param>
   /// <returns>Result of the validation</returns>
-  public ObjectValidationResult Validate(object instance, bool breakOnFirstError = false)
+  public ObjectValidationResult Validate(object instance, bool breakOnFirstError = false, ValidationContext? validationContext = null)
   {
-    var validationContext = new ValidationContext(instance, this.ServiceProvider, null);
+    if (validationContext is null)
+    {
+      var items = new Dictionary<object, object?>()
+      {
+        { VisitedKey, new HashSet<object>() },
+        { ValidatorKey, this }
+      };
+
+      validationContext = new ValidationContext(instance, this.ServiceProvider, items);
+    }
 
     var results = this.EnumerateValidationResults(instance, validationContext, breakOnFirstError).ToList();
 
@@ -73,7 +85,8 @@ public class ObjectValidator : IObjectValidator
 
     foreach (var validationResult in validatable.Validate(context))
     {
-      yield return validationResult;
+      if (validationResult is not null)
+        yield return validationResult;
       if (breakOnFirstError)
         yield break;
     }
