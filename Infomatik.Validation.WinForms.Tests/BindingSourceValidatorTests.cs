@@ -34,9 +34,9 @@ public class BindingSourceValidatorTests
 public class ObservableValidator : IObjectValidator
 {
 
-  public int NumberOfValidationInvocations { get; private set; }= 0;
+  public int NumberOfValidationInvocations { get; private set; } = 0;
 
-  public ObjectValidationResult Validate(object instance, bool breakOnFirstError)
+  public ObjectValidationResult Validate(object instance, bool breakOnFirstError, ValidationContext? context = null)
   {
     this.NumberOfValidationInvocations++;
     return ObjectValidator.Default.Validate(instance, breakOnFirstError);

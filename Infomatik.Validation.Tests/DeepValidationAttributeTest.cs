@@ -8,9 +8,12 @@ public class DeepValidationAttributeTest
   [Fact]
   public void Test()
   {
+    var instance = new DeepPropertyTestObject();
+    var result = ObjectValidator.Default.Validate(instance);
 
+    Assert.False(result.IsValid);
   }
-  
+
 }
 
 public class DeepPropertyTestObject
