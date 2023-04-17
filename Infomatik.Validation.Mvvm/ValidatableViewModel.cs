@@ -28,7 +28,7 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 
   #region fields
 
-  private readonly Dictionary<string, IEnumerable> errors = new();
+  private Dictionary<string, IList<string>> errors = new();
   private bool hasErrors;
   private readonly ThrottledAction throttledValidationAction;
 
@@ -43,6 +43,12 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
   }
 
   public IObjectValidator Validator { get; set; } = ObjectValidator.Default;
+
+  public SynchronizationContext? SynchronizationContext
+  {
+    get => this.throttledValidationAction.SynchronizationContext;
+    set => this.throttledValidationAction.SynchronizationContext = value;
+  }
 
   #endregion
 
@@ -69,16 +75,37 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 
   protected void Validate()
   {
-    var current = new Dictionary<string, IEnumerable>(this.errors);
+    var current = new Dictionary<string, IList<string>>(this.errors);
     var result = this.Validator.Validate(this, false);
     this.HasErrors = result.IsError;
+    this.errors = this.FlattenValidationResult(result);
 
     foreach (var changed in this.EnumerateChangedProperties(current, this.errors))
       this.OnErrorsChanged(changed);
   }
 
-  private IEnumerable<string> EnumerateChangedProperties(IDictionary<string, IEnumerable> current,
-    IDictionary<string, IEnumerable> changed)
+  private Dictionary<string, IList<string>> FlattenValidationResult(ObjectValidationResult validationResult)
+  {
+    var result = new Dictionary<string, IList<string>>();
+
+    var errorOrMissing = validationResult.Errors.Concat(validationResult.Missing);
+
+    foreach (var error in errorOrMissing)
+    {
+      foreach (var member in error.MemberNames)
+      {
+        if(!result.ContainsKey(member))
+          result.Add(member, new List<string>());
+
+        result[member].Add(error.ErrorMessage!);
+      }
+    }
+
+    return result;
+  }
+
+  private IEnumerable<string> EnumerateChangedProperties(IDictionary<string, IList<string>> current,
+    IDictionary<string, IList<string>> changed)
   {
     foreach (var currentEntry in current.Keys.ToList())
     {
@@ -140,32 +167,58 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 public class ThrottledAction
 {
   private readonly Action action;
-  private readonly TimeSpan throttleTime;
   private readonly Timer timer;
 
-  public SynchronizationContext SynchronizationContext { get; set; } = SynchronizationContext.Current;
+
+  public bool IsThrottlingEnabled { get; }
+  public TimeSpan ThrottleTime { get; }
+  public SynchronizationContext? SynchronizationContext { get; set; } = SynchronizationContext.Current;
 
   public ThrottledAction(Action action, TimeSpan throttleTime)
   {
     this.action = action;
-    this.throttleTime = throttleTime;
-    this.timer = new Timer(throttleTime.TotalMilliseconds);
-    this.timer.Elapsed += this.TriggerThrottledAction;
-    this.timer.Enabled = false;
+    this.ThrottleTime = throttleTime;
+    this.IsThrottlingEnabled = throttleTime.TotalMilliseconds > 0;
+
+    if (this.IsThrottlingEnabled)
+    {
+      this.timer = new Timer(throttleTime.TotalMilliseconds);
+      this.timer.Elapsed += this.TriggerThrottledAction;
+      this.timer.Enabled = false;
+    }
   }
 
   private void TriggerThrottledAction(object? sender, ElapsedEventArgs e)
   {
     this.timer.Stop();
-    this.SynchronizationContext.Post(_ =>
+    this.ExecuteActionOnSynchronizationContext();
+  }
+
+  private void ExecuteActionOnSynchronizationContext()
+  {
+    if (this.SynchronizationContext is null)
     {
       this.action();
-    }, null);
+    }
+    else
+    {
+      this.SynchronizationContext.Post(_ =>
+      {
+        this.action();
+      }, null);
+    }
   }
 
   public void Trigger()
   {
-    this.timer.Stop();
-    this.timer.Start();
+    if (this.IsThrottlingEnabled)
+    {
+      this.timer.Stop();
+      this.timer.Start();
+    }
+    else
+    {
+      this.ExecuteActionOnSynchronizationContext();
+    }
   }
 }
