@@ -8,7 +8,7 @@ namespace Infomatik.Validation.Mvvm.Tests
     [Fact]
     public void RaisesErrorChanged()
     {
-      var instance = new Validatable();
+      var instance = new MvvmValidatableTest();
       var evt = Assert.Raises<DataErrorsChangedEventArgs>(h => instance.ErrorsChanged += h,
         h => instance.ErrorsChanged -= h, () => instance.NonEmpty = "");
 

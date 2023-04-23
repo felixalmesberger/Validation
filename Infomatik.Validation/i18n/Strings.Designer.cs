@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Infomatik.Validation.WinForms.i18n {
+namespace Infomatik.Validation.i18n {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Infomatik.Validation.WinForms.i18n {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Infomatik.Validation.WinForms.i18n.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Infomatik.Validation.i18n.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

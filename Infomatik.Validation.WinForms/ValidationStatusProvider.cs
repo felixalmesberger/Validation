@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Infomatik.Validation.WinForms.i18n;
+using Infomatik.Validation.WinForms;
+using Infomatik.Validation;
 
 namespace Infomatik.Validation.WinForms;
 
@@ -51,7 +52,7 @@ public class ValidationStatusProvider : Component, IExtenderProvider
 
   #region properties
 
-  public string RequiredFallbackErrorMessage => Strings.Required;
+  public string RequiredFallbackErrorMessage => "";//Strings.Required;
 
   #endregion
 

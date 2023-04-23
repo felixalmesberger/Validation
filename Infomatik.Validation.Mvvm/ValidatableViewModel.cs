@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Timers;
-using Timer = System.Timers.Timer;
 
 namespace Infomatik.Validation.Mvvm;
 
@@ -30,7 +28,7 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 
   private Dictionary<string, IList<string>> errors = new();
   private bool hasErrors;
-  private readonly ThrottledAction throttledValidationAction;
+  private readonly SynchronizedThrottledAction throttledValidationAction;
 
   #endregion
 
@@ -53,15 +51,10 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
   #endregion
 
   #region constructors
-
-  public ValidatableViewModel()
-    : this(TimeSpan.FromMilliseconds(300))
+  
+  public ValidatableViewModel(int validationThrottleTimeInMs = 300)
   {
-  }
-
-  public ValidatableViewModel(TimeSpan throttledValidationTimespan)
-  {
-    this.throttledValidationAction = new(this.Validate, throttledValidationTimespan);
+    this.throttledValidationAction = new(this.Validate, validationThrottleTimeInMs);
   }
 
   #endregion
@@ -94,7 +87,7 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
       foreach (var member in error.MemberNames)
       {
-        if(!result.ContainsKey(member))
+        if (!result.ContainsKey(member))
           result.Add(member, new List<string>());
 
         result[member].Add(error.ErrorMessage!);
@@ -139,86 +132,28 @@ public class ValidatableViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
       for (var i = 0; i < currentValues.Count; i++)
       {
         if (currentValues[i] != changedValues[i])
-        {
           yield return entry;
-          continue;
-        }
       }
     }
   }
+
+  public IDisposable SuspendValidation() => this.throttledValidationAction.Suspend();
 
   protected void SetAndValidate<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
   {
     field = value;
     this.OnPropertyChanged(propertyName);
-    this.throttledValidationAction.Trigger();
-
+    this.throttledValidationAction.Invoke();
   }
 
   public IEnumerable GetErrors(string? propertyName)
   {
+    if (propertyName is null)
+      return Enumerable.Empty<object>();
+
     if (this.errors.TryGetValue(propertyName, out var errors))
       return errors;
 
     return Enumerable.Empty<object>();
-  }
-}
-
-public class ThrottledAction
-{
-  private readonly Action action;
-  private readonly Timer timer;
-
-
-  public bool IsThrottlingEnabled { get; }
-  public TimeSpan ThrottleTime { get; }
-  public SynchronizationContext? SynchronizationContext { get; set; } = SynchronizationContext.Current;
-
-  public ThrottledAction(Action action, TimeSpan throttleTime)
-  {
-    this.action = action;
-    this.ThrottleTime = throttleTime;
-    this.IsThrottlingEnabled = throttleTime.TotalMilliseconds > 0;
-
-    if (this.IsThrottlingEnabled)
-    {
-      this.timer = new Timer(throttleTime.TotalMilliseconds);
-      this.timer.Elapsed += this.TriggerThrottledAction;
-      this.timer.Enabled = false;
-    }
-  }
-
-  private void TriggerThrottledAction(object? sender, ElapsedEventArgs e)
-  {
-    this.timer.Stop();
-    this.ExecuteActionOnSynchronizationContext();
-  }
-
-  private void ExecuteActionOnSynchronizationContext()
-  {
-    if (this.SynchronizationContext is null)
-    {
-      this.action();
-    }
-    else
-    {
-      this.SynchronizationContext.Post(_ =>
-      {
-        this.action();
-      }, null);
-    }
-  }
-
-  public void Trigger()
-  {
-    if (this.IsThrottlingEnabled)
-    {
-      this.timer.Stop();
-      this.timer.Start();
-    }
-    else
-    {
-      this.ExecuteActionOnSynchronizationContext();
-    }
   }
 }

@@ -33,7 +33,7 @@ public class BindingSourceValidator : Component, ISupportInitialize
 
   private readonly IContainer? container;
   private bool isValid;
-  private readonly ThrottledUiAction throttledValidation;
+  private readonly ThrottledWinFormsAction throttledValidation;
   private BindingSource? bindingSource;
 
   #endregion

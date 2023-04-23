@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace Infomatik.Validation.Mvvm.Tests;
-
+namespace Infomatik.Validation.Mvvm.Sample;
 public class MvvmValidatableTest : ValidatableViewModel
 {
 
@@ -12,11 +12,5 @@ public class MvvmValidatableTest : ValidatableViewModel
   {
     get => this.nonEmpty;
     set => this.SetAndValidate(ref this.nonEmpty, value);
-  }
-
-  public MvvmValidatableTest()
-    : base(TimeSpan.Zero)
-  {
-    this.SynchronizationContext = null;
   }
 }

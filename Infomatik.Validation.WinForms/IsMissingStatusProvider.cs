@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using Infomatik.Validation.WinForms.i18n;
 
 namespace Infomatik.Validation.WinForms;
 
@@ -87,7 +83,7 @@ public class IsMissingStatusProvider : Component, IExtenderProvider
 
   private static class SR
   {
-    public static string Required => Strings.Required;
+    public static string Required => "";
   }
 
   private static class NativeMethods

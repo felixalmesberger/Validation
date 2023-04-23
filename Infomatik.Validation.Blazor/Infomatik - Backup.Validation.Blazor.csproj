@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Infomatik.Validation\Infomatik.Validation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="js\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,12 @@
+﻿<Window x:Class="Infomatik.Validation.Mvvm.Sample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Infomatik.Validation.Mvvm.Sample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox Margin="100,200,100,200"  Text="{Binding NonEmpty,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True,ValidatesOnDataErrors=True}"></TextBox>
+    </Grid>
+</Window>
