@@ -1,4 +1,10 @@
 ﻿@page "/"
+@using Infomatik.Validation.Blazor.Sample.Data
+
+@code
+{
+  private User user = new();
+}
 
 <PageTitle>Index</PageTitle>
 
@@ -7,3 +13,28 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+
+<EditForm Model="user">
+  <ExtendedValidator TreatMissingValuesAsError="true" />
+
+  <label for="username">Username</label>
+  <input @bind="this.user.Username" id="username" />
+  <ValidationMessage For="() => this.user.Username"></ValidationMessage>
+
+  <br />
+
+  <label for="password">Password</label>
+  <input @bind="this.user.Password" id="password" />
+  <ValidationMessage For="() => this.user.Password"></ValidationMessage>
+
+  <br />
+
+  <label for="confirmed-password">Confirmed Password</label>
+  <input @bind="this.user.ConfirmPassword" id="confirmed-password" />
+  <ValidationMessage For="() => this.user.ConfirmPassword"></ValidationMessage>
+
+  <br />
+
+  <ValidationSummary />
+</EditForm>

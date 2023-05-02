@@ -13,6 +13,8 @@ public class ExtendedValidatorSubscriptions : IDisposable
 
   private ObjectValidationResult? lastValidationResult;
 
+  public bool TreatMissingAsErrors { get; set; }
+
   public ExtendedValidatorSubscriptions(EditContext editContext, IServiceProvider? serviceProvider)
   {
     this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
@@ -28,14 +30,14 @@ public class ExtendedValidatorSubscriptions : IDisposable
       ServiceProvider = this.serviceProvider
     };
 
-    this.Validate(false);
+    this.Validate(this.TreatMissingAsErrors);
   }
 
   private void ValidationRequested(object? sender, ValidationRequestedEventArgs e)
-    => this.Validate(addMissingsToErrors: true);
+    => this.Validate(addMissingsToErrors: this.TreatMissingAsErrors);
 
   private void FieldChanged(object? sender, FieldChangedEventArgs e)
-    => this.Validate(addMissingsToErrors: false);
+    => this.Validate(addMissingsToErrors: this.TreatMissingAsErrors);
 
   private void Validate(bool addMissingsToErrors)
   {
@@ -44,14 +46,14 @@ public class ExtendedValidatorSubscriptions : IDisposable
     this.messages.Clear();
 
     foreach (var error in this.lastValidationResult.Errors)
-    foreach (var memberName in error.MemberNames)
-      this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage);
+      foreach (var memberName in error.MemberNames)
+        this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage!);
 
     if (addMissingsToErrors)
     {
       foreach (var error in this.lastValidationResult.Missing)
-      foreach (var memberName in error.MemberNames)
-        this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage);
+        foreach (var memberName in error.MemberNames)
+          this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage!);
     }
 
     this.editContext.NotifyValidationStateChanged();

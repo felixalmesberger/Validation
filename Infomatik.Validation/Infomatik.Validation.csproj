@@ -36,6 +36,10 @@
 	    <DependentUpon>Strings.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="Infomatik.Validation.Blazor" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Update="i18n\Strings.resx">
