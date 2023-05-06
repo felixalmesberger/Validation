@@ -17,24 +17,24 @@ Welcome to your new app.
 
 <EditForm Model="user">
   <ExtendedValidator TreatMissingValuesAsError="true" />
-
-  <label for="username">Username</label>
-  <input @bind="this.user.Username" id="username" />
-  <ValidationMessage For="() => this.user.Username"></ValidationMessage>
-
-  <br />
-
-  <label for="password">Password</label>
-  <input @bind="this.user.Password" id="password" />
-  <ValidationMessage For="() => this.user.Password"></ValidationMessage>
-
-  <br />
-
-  <label for="confirmed-password">Confirmed Password</label>
-  <input @bind="this.user.ConfirmPassword" id="confirmed-password" />
-  <ValidationMessage For="() => this.user.ConfirmPassword"></ValidationMessage>
-
-  <br />
-
+  <ShowRequiredPlaceholderBehaviour/>
   <ValidationSummary />
+  
+  <div class="row p-4">
+    <label>Name</label>
+    <InputText id="username" @bind-Value="@user.Username" />
+    <ValidationMessage For="@(() => user.Username)" />
+  </div>
+  
+  <div class="row p-4">
+    <label>Password</label>
+    <InputText id="password" @bind-Value="@user.Password" />
+    <ValidationMessage For="@(() => user.Password)" />
+  </div>
+  
+  <div class="row p-4">
+    <label>Confirm Password</label>
+    <InputText id="confirmpassword" @bind-Value="@user.ConfirmPassword" />
+    <ValidationMessage For="@(() => user.ConfirmPassword)" />
+  </div>
 </EditForm>

@@ -13,6 +13,12 @@ public class ExtendedValidatorSubscriptions : IDisposable
 
   private ObjectValidationResult? lastValidationResult;
 
+  /// <summary>
+  /// Treat missing (properties with Required attribute) as errors when field changed
+  /// It can be useful to set this to false, when required fields are displayed differently
+  /// With a placeholder for example
+  /// NOTE: This has no effect, when the whole model is being validated. 
+  /// </summary>
   public bool TreatMissingAsErrors { get; set; }
 
   public ExtendedValidatorSubscriptions(EditContext editContext, IServiceProvider? serviceProvider)
@@ -29,17 +35,16 @@ public class ExtendedValidatorSubscriptions : IDisposable
     {
       ServiceProvider = this.serviceProvider
     };
-
-    this.Validate(this.TreatMissingAsErrors);
   }
 
+  // if validiation is requested always treat missing as errors
   private void ValidationRequested(object? sender, ValidationRequestedEventArgs e)
-    => this.Validate(addMissingsToErrors: this.TreatMissingAsErrors);
+    => this.Validate(true);
 
   private void FieldChanged(object? sender, FieldChangedEventArgs e)
-    => this.Validate(addMissingsToErrors: this.TreatMissingAsErrors);
+    => this.Validate(this.TreatMissingAsErrors);
 
-  private void Validate(bool addMissingsToErrors)
+  internal void Validate(bool treatMissingAsErrors)
   {
     this.lastValidationResult = this.objectValidator.Validate(this.editContext.Model, false);
 
@@ -49,7 +54,7 @@ public class ExtendedValidatorSubscriptions : IDisposable
       foreach (var memberName in error.MemberNames)
         this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage!);
 
-    if (addMissingsToErrors)
+    if (treatMissingAsErrors)
     {
       foreach (var error in this.lastValidationResult.Missing)
         foreach (var memberName in error.MemberNames)

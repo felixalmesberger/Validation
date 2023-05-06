@@ -37,6 +37,8 @@ public class ExtendedValidator : ComponentBase, IDisposable
     {
       TreatMissingAsErrors = this.initialTreatMissingAsErrors
     };
+
+    this.subscriptions.Validate();
   }
 
   public string GetRequiredPlaceholderMessage(string fieldName)
