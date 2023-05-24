@@ -44,7 +44,7 @@ public class ExtendedValidatorSubscriptions : IDisposable
   private void FieldChanged(object? sender, FieldChangedEventArgs e)
     => this.Validate(this.TreatMissingAsErrors);
 
-  internal void Validate(bool treatMissingAsErrors)
+  internal void Validate(bool? treatMissingAsErrors = null)
   {
     this.lastValidationResult = this.objectValidator.Validate(this.editContext.Model, false);
 
@@ -54,7 +54,7 @@ public class ExtendedValidatorSubscriptions : IDisposable
       foreach (var memberName in error.MemberNames)
         this.messages.Add(new FieldIdentifier(this.editContext.Model, memberName), error.ErrorMessage!);
 
-    if (treatMissingAsErrors)
+    if (treatMissingAsErrors ?? this.TreatMissingAsErrors)
     {
       foreach (var error in this.lastValidationResult.Missing)
         foreach (var memberName in error.MemberNames)
